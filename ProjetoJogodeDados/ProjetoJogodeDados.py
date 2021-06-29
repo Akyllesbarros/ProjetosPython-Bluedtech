@@ -14,39 +14,51 @@
 import os # Biblioteca para limpar o terminal
 import random as rd # biblioteca para criar aleatoriedade e cria um atalho pra chamar ela (as 'rd')
 import time as tm # biblioteca para criar deley 
+from operator import itemgetter  # biblioteca para ordenar lista de dicionários
 
-# Pergunta quantas rodadas, e cria o dicionário 
-rodadas = int(input('Quantas rodadas você quer jogar?\n')) 
+
+    # Pergunta quantas rodadas o jogador quer jogar, e declara as listas e o dicionário e o contador
+rodadas = int(input('Olá, Quantas rodadas você quer jogar?\n')) 
 resultados = dict()
+listaOrdena = list()
+
+
+    # Permite que o usuário digite seu nome de jogador
+jogador1 = input(f'🎮 Digite seu nome, jogador 1: 🎮\n')
+jogador2 = input(f'🎮 Digite seu nome, jogador 2: 🎮\n')
+jogador3 = input(f'🎮 Digite seu nome, jogador 3: 🎮\n')
+jogador4 = input(f'🎮 Digite seu nome, jogador 4: 🎮\n')
 os.system('cls')
 
-# Laço de repetição para quantidade de rodadas
-for c in range(rodadas) :
-    for j in range(4) :
 
-     # Cria chave do dicionário que é o input do NOME DO JOGADOR // Cria o Valor de cada chave sorteando o um número aleatório de 1 a 6 ( 6 lados do Dado)
-        resultados[input(f'Digite seu nome, jogador {j+1}:\n')] = rd.randint(1, 7)  
-        os.system('cls')
-        tm.sleep(0.5)
+    # Laço de repetição para quantidade de rodadas
+for c in range(0, rodadas) :
+    
+    print(f'''
+        🎲  {c+1} rodada !  🎲
+    ''')
 
-# Ordena o dicionario, e printa as chaves e os valores de cada chave
-for i in sorted(resultados, reverse=True):   
-    print(resultados[i])
-    tm.sleep(3)
+        # Cria o dicionário e adiciona valores aleatórios da biblioteca "random"
+    resultados = {
+    jogador1 : rd.randint(1, 6),
+    jogador2 : rd.randint(1, 6),
+    jogador3 : rd.randint(1, 6),
+    jogador4 : rd.randint(1, 6)
+}
+        # Ordena por ordem decrescente os valores das chaves do dicionário, e inclui o maior valor em uma lista. 
+    vencedor = sorted(resultados.items(), key=itemgetter(1), reverse=True)
+    listaOrdena.append(vencedor[0])
 
+        # imprime os resultados do dicionário em ordem.
+    for t in sorted(resultados, reverse=True):   
+        print(f'''
+           {t} Tirou {resultados[t]} !''')
+        tm.sleep(1)
+    os.system('cls')
 
+    # Reinverte a ordem da lista e imprime os vencedores de cada rodada. 
+reversed(listaOrdena)
+for i, v in enumerate(listaOrdena) :
+    print(f''' 
+        A {i+1}º rodada foi do(a) {v[0]} com resultado: {v[1]}''')
 
-
-
-# Versão 2 
-
-
-# rodadas = int(input('Digite quantas rodadas você quer jogar:\n'))
-
-# resultados = {
-#     input('Digite seu nome, jogador:\n') : rd.randint(1, 7),
-#     input('Digite seu nome, jogador:\n') : rd.randint(1, 7),
-#     input('Digite seu nome, jogador:\n') : rd.randint(1, 7),
-#     input('Digite seu nome, jogador:\n') : rd.randint(1, 7),
-# }
-# for c in range(rodadas) :
