@@ -22,15 +22,28 @@
 # ● O total de votos em branco;
 # ● Qual candidato venceu a votação
 
-from collections import Counter
-import os 
-import time as tm
-import pygame    
 
-pygame.init()
+
+# Início
+
+
+
+from collections import Counter # Biblioteca utilizada para listar elementos mais comuns e ordena.
+import os                       # Biblioteca para limpar o terminal.
+import time as tm               # Biblioteca para adicionar deley as ações. 
+import pygame                   # Biblioteca para adicionar som.
+
+# Busca e inicia o som. 
+
+pygame.init()                           
 pygame.mixer.music.load('turum.mp3')
 
+# Cria lista ranking(lista de ordenação dos votos).
 ranking = list()
+
+# Cria lista de Dicionários alterável. 
+
+    # O programa é maleável quanto a quantidade de candidatos e votos, logo, basta adicionar qualquer quantia de candidatos nessa lista que julgar necessário que o programa executa a contagem e apresentação normalmente. 
 
 candidatos = [
     {
@@ -60,9 +73,9 @@ candidatos = [
     }
 ]
     
-
+# Função 'contarVoto()' realiza a contagem dos votos de cada candidato, e insere apenas o nome do candidato(com repetição) na lista. 
 def contarVoto(voto): 
-    global ranking
+    global ranking   # transforma a variável 'ranking' em global para ser utilizada em outras funções. 
     
     for i, c in enumerate(candidatos):
     
@@ -70,7 +83,8 @@ def contarVoto(voto):
             candidatos[i]['votos'] += 1
             ranking.append(candidatos[i]['nome'])
             
-        
+
+# Função 'apurarVoto()' imprime a quantidade de votos de cada candidato, ordena a lista de ranking e imprime o candidato vencedor.
 def apurarVotos() :
     
     for c in candidatos :
@@ -79,6 +93,7 @@ def apurarVotos() :
         print(f'O candidato {c[0]} venceu com {c[1]} votos válidos!')
 
 
+# Função 'autorizaVoto' Calcula através da idade, a situação eleitoral do participante (negado, opcional, obrigatório). Se voto opcional, pergunta se deseja votar ou não. 
 def autorizaVoto(anoNascimento) :
     idade = 2021 - anoNascimento
     if (idade >= 16 and idade < 18) or idade > 70 :
@@ -99,6 +114,7 @@ def autorizaVoto(anoNascimento) :
         return False
 
 
+# Função 'continuarVotando()' Exibe menu e Pergunta ao usuário qual ação realizar ao final da votação. 
 def continuarVotando() :
     continuar = int(input('O que deseja fazer?\n\n1 - Próximo voto\n2 - Encerrar Votação\n\n'))
     if continuar == 1 : 
@@ -112,11 +128,12 @@ def continuarVotando() :
         apurarVotos()
         
 
+# função votar, Função principal, Inicia o programa, e  ordena todas funções.
 def votar() :
     os.system('cls')
-    print('🗳️ Olá, você está em um simulador de votação.🗳️\n')
+    print('🗳️  Olá, você está em um simulador de votação 🗳️\n')
     tm.sleep(1)
-    anoNascimento = int(input('Por favor, digite primeiro seu ano de Nascimento:\n'))
+    anoNascimento = int(input('Por favor, digite o seu ano de Nascimento:\n'))
     os.system('cls')
 
     if autorizaVoto(anoNascimento) == False : 
@@ -137,5 +154,5 @@ def votar() :
     print('Voto contabilizado! Obrigado por votar. ')
     continuarVotando()
 
-    
+# Chamando a função para executar o código. 
 votar()
